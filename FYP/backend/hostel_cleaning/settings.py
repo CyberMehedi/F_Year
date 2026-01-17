@@ -9,13 +9,17 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# =========================
 # SECURITY
+# =========================
 SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
+# =========================
 # APPLICATIONS
+# =========================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,11 +33,13 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
 
-    # Local
-    'api',
+    # Local (IMPORTANT CHANGE HERE)
+    'api.apps.ApiConfig',
 ]
 
+# =========================
 # MIDDLEWARE
+# =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -48,6 +54,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hostel_cleaning.urls'
 
+# =========================
+# TEMPLATES
+# =========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -66,7 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hostel_cleaning.wsgi.application'
 
+# =========================
 # DATABASE (Render PostgreSQL)
+# =========================
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
@@ -75,7 +86,9 @@ DATABASES = {
     )
 }
 
+# =========================
 # PASSWORD VALIDATION
+# =========================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -83,13 +96,17 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# =========================
 # INTERNATIONALIZATION
+# =========================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kuala_Lumpur'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC FILES
+# =========================
+# STATIC & MEDIA FILES
+# =========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -99,10 +116,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CUSTOM USER
+# =========================
+# CUSTOM USER MODEL
+# =========================
 AUTH_USER_MODEL = 'api.User'
 
+# =========================
 # DRF
+# =========================
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -112,18 +133,24 @@ REST_FRAMEWORK = {
     ),
 }
 
+# =========================
 # JWT
+# =========================
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+# =========================
 # CORS
+# =========================
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# =========================
 # EMAIL
+# =========================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -131,7 +158,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
+# =========================
 # LOGGING
+# =========================
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
