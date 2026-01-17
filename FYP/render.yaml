@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: fyp-backend
+    env: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn hostel_cleaning.wsgi
+
+  - type: static_site
+    name: fyp-frontend
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: build
