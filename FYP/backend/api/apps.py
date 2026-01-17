@@ -12,6 +12,7 @@ class ApiConfig(AppConfig):
 
         email = os.getenv("DJANGO_SUPERUSER_EMAIL")
         password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
+        name = os.getenv("DJANGO_SUPERUSER_NAME", "Admin")
 
         if not email or not password:
             return
@@ -19,6 +20,7 @@ class ApiConfig(AppConfig):
         if not User.objects.filter(email=email).exists():
             User.objects.create_superuser(
                 email=email,
-                password=password
+                password=password,
+                name=name
             )
             print("✅ Superuser created automatically")
